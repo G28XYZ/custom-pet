@@ -7,8 +7,15 @@ const STATIC_DIR =
   process.env.STATIC_DIR ||
   (process.argv[1]?.endsWith('server.cjs') ? dirname(resolve(process.argv[1])) : undefined);
 
-const app = createApp(DB_PATH, STATIC_DIR);
+async function main() {
+  const app = await createApp(DB_PATH, STATIC_DIR);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+main().catch((error) => {
+  console.error('Failed to start server', error);
+  process.exit(1);
 });

@@ -5,3 +5,4 @@ output_dirs = ["dist"]
 [deploy]
 compute = "process"
 entry = "server.cjs"
+health_check_path = "/api/health"

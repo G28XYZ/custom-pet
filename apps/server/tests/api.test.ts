@@ -9,12 +9,12 @@ const TEST_DB = './data/test-todos.db';
 
 let app: Express;
 
-beforeAll(() => {
+beforeAll(async () => {
   // Clean test DB
   try { rmSync(TEST_DB); } catch {}
   try { rmSync(TEST_DB + '-wal'); } catch {}
   try { rmSync(TEST_DB + '-shm'); } catch {}
-  app = createApp(TEST_DB);
+  app = await createApp(TEST_DB);
 });
 
 afterAll(() => {
@@ -74,7 +74,7 @@ describe('Server API', () => {
     });
 
     it('should return empty array when no todos', async () => {
-      const freshApp = createApp('./data/test-empty.db');
+      const freshApp = await createApp('./data/test-empty.db');
       try {
         const res = await request(freshApp).get('/api/todos');
         expect(res.status).toBe(200);

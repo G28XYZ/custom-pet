@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
@@ -9,15 +9,6 @@ const target = resolve(root, "dist");
 
 const run = (command, args) => {
   execFileSync(command, args, { cwd: root, stdio: "inherit" });
-};
-
-const copyPackage = (name) => {
-  const source = resolve(root, "node_modules", name);
-  if (!existsSync(source)) {
-    throw new Error(`Missing runtime package: ${name}`);
-  }
-
-  cpSync(source, resolve(target, "node_modules", name), { recursive: true });
 };
 
 run("npm", ["run", "build"]);
@@ -32,13 +23,8 @@ await build({
   target: "node20",
   format: "cjs",
   outfile: resolve(target, "server.cjs"),
-  external: ["better-sqlite3"],
+  external: ["better-sqlite3", "bun:sqlite"],
 });
-
-mkdirSync(resolve(target, "node_modules"), { recursive: true });
-for (const packageName of ["better-sqlite3", "bindings", "file-uri-to-path"]) {
-  copyPackage(packageName);
-}
 
 const manifest = {
   version: 1,

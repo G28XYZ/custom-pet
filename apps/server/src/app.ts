@@ -6,9 +6,9 @@ import { migrate } from './db/migrate';
 import { TodoRepository } from './db/repository';
 import { createRouter } from './api/routes';
 
-export function createApp(dbPath: string, staticDir?: string) {
+export async function createApp(dbPath: string, staticDir?: string) {
   const db = createDb(dbPath);
-  migrate(db);
+  await migrate(db);
 
   const repo = new TodoRepository(db);
   const app = express();

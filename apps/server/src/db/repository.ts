@@ -1,18 +1,16 @@
-import { eq } from 'drizzle-orm';
 import { v4 as uuid } from 'uuid';
 import type { Todo, TodoCreate, TodoUpdate } from '@todo/shared';
 import type { Db } from './index';
-import { todos } from './schema';
 
 export class TodoRepository {
   constructor(private db: Db) {}
 
   async findAll(): Promise<Todo[]> {
-    return this.db.select().from(todos).all();
+    return this.db.findAll();
   }
 
   async findById(id: string): Promise<Todo | undefined> {
-    return this.db.select().from(todos).where(eq(todos.id, id)).get();
+    return this.db.findById(id);
   }
 
   async create(input: TodoCreate): Promise<Todo> {
@@ -24,7 +22,7 @@ export class TodoRepository {
       createdAt: now,
       updatedAt: now,
     };
-    this.db.insert(todos).values(todo).run();
+    await this.db.create(todo);
     return todo;
   }
 
@@ -36,28 +34,26 @@ export class TodoRepository {
     if (input.text !== undefined) updated.text = input.text;
     if (input.completed !== undefined) updated.completed = input.completed;
 
-    this.db.update(todos).set(updated).where(eq(todos.id, id)).run();
+    await this.db.update(id, updated as TodoUpdate & { updatedAt: number });
     return this.findById(id);
   }
 
   async remove(id: string): Promise<boolean> {
-    const result = this.db.delete(todos).where(eq(todos.id, id)).run();
-    return result.changes > 0;
+    return this.db.remove(id);
   }
 
   async clearCompleted(): Promise<number> {
-    const result = this.db.delete(todos).where(eq(todos.completed, true)).run();
-    return result.changes;
+    return this.db.clearCompleted();
   }
 
   async reset(): Promise<void> {
-    this.db.delete(todos).run();
+    await this.db.reset();
   }
 
   async sync(localTodos: Todo[], deletedIds: string[] = []): Promise<Todo[]> {
     // Process deletions first
     for (const id of deletedIds) {
-      this.db.delete(todos).where(eq(todos.id, id)).run();
+      await this.db.remove(id);
     }
 
     const serverTodos = await this.findAll();
@@ -67,20 +63,21 @@ export class TodoRepository {
       const server = serverMap.get(local.id);
       if (!server) {
         // New local item - create on server
-        this.db.insert(todos).values({
+        await this.db.create({
           id: local.id,
           text: local.text,
           completed: local.completed,
           createdAt: local.createdAt,
           updatedAt: local.updatedAt,
-        }).run();
+        });
         serverMap.set(local.id, local);
       } else if (local.updatedAt > server.updatedAt) {
         // Local is newer - update server
-        this.db.update(todos)
-          .set({ text: local.text, completed: local.completed, updatedAt: local.updatedAt })
-          .where(eq(todos.id, local.id))
-          .run();
+        await this.db.update(local.id, {
+          text: local.text,
+          completed: local.completed,
+          updatedAt: local.updatedAt,
+        });
         serverMap.set(local.id, { ...server, ...local, updatedAt: local.updatedAt });
       }
     }
