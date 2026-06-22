@@ -4,33 +4,109 @@
 
 ## Project Inputs
 
-| Variable | Value |
-| --- | --- |
-| `SOURCE` | `https://g28xyz.github.io/rvm-toolkit/examples/todo-list/` |
-| `TEST_COMMAND` | `npm test && npx playwright test` |
-| `DB_LIBRARY_POLICY` | `use-ready-proven-libraries` |
-| `SYNC_POLICY` | `local-first-by-default-server-sync-only-if-required` |
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>SOURCE</code></td>
+      <td><code>https://g28xyz.github.io/rvm-toolkit/examples/todo-list/</code></td>
+    </tr>
+    <tr>
+      <td><code>TEST_COMMAND</code></td>
+      <td><code>npm test &amp;&amp; npx playwright test</code></td>
+    </tr>
+    <tr>
+      <td><code>DB_LIBRARY_POLICY</code></td>
+      <td><code>use-ready-proven-libraries</code></td>
+    </tr>
+    <tr>
+      <td><code>SYNC_POLICY</code></td>
+      <td><code>local-first-by-default-server-sync-only-if-required</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Project Constraints
 
-| Variable | Value |
-| --- | --- |
-| `CLIENT_APP` | `React + TypeScript + Vite` |
-| `SERVER_APP` | `Node.js API + TypeScript` |
-| `FULLSTACK_MODE` | `separate-client-server` |
-| `APP_MODE` | `local-first (IndexedDB)` |
-| `API_REQUIRED` | `true` |
-| `DATABASE_REQUIRED` | `true` |
-| `DATABASE_URL_ENV` | `DATABASE_URL` |
-| `DATABASE_ENGINE` | `PostgreSQL only` |
-| `DB_ACCESS_RULE` | `server-only` |
-| `CLIENT_DB_ACCESS` | `forbidden` |
-| `REQUIRED_LANGUAGE` | `match-source` |
-| `DONE_POLICY` | `no-required-item-in-limitations` |
-| `REFERENCE_MATCH_MODE` | `exact` |
-| `VISUAL_MATCH_REQUIRED` | `true` |
-| `TEXT_MATCH_REQUIRED` | `true` |
-| `INTERACTION_MATCH_REQUIRED` | `true` |
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>CLIENT_APP</code></td>
+      <td><code>React + TypeScript + Vite</code></td>
+    </tr>
+    <tr>
+      <td><code>SERVER_APP</code></td>
+      <td><code>Node.js API + TypeScript</code></td>
+    </tr>
+    <tr>
+      <td><code>FULLSTACK_MODE</code></td>
+      <td><code>separate-client-server</code></td>
+    </tr>
+    <tr>
+      <td><code>APP_MODE</code></td>
+      <td><code>local-first (IndexedDB)</code></td>
+    </tr>
+    <tr>
+      <td><code>API_REQUIRED</code></td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td><code>DATABASE_REQUIRED</code></td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td><code>DATABASE_URL_ENV</code></td>
+      <td><code>DATABASE_URL</code></td>
+    </tr>
+    <tr>
+      <td><code>DATABASE_ENGINE</code></td>
+      <td><code>PostgreSQL only</code></td>
+    </tr>
+    <tr>
+      <td><code>DB_ACCESS_RULE</code></td>
+      <td><code>server-only</code></td>
+    </tr>
+    <tr>
+      <td><code>CLIENT_DB_ACCESS</code></td>
+      <td><code>forbidden</code></td>
+    </tr>
+    <tr>
+      <td><code>REQUIRED_LANGUAGE</code></td>
+      <td><code>match-source</code></td>
+    </tr>
+    <tr>
+      <td><code>DONE_POLICY</code></td>
+      <td><code>no-required-item-in-limitations</code></td>
+    </tr>
+    <tr>
+      <td><code>REFERENCE_MATCH_MODE</code></td>
+      <td><code>exact</code></td>
+    </tr>
+    <tr>
+      <td><code>VISUAL_MATCH_REQUIRED</code></td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td><code>TEXT_MATCH_REQUIRED</code></td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td><code>INTERACTION_MATCH_REQUIRED</code></td>
+      <td><code>true</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Task
 
