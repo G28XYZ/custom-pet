@@ -1,8 +1,0 @@
-[build]
-command = "ONREZA_BUILD=1 npm run build:onreza"
-output_dirs = ["dist"]
-
-[deploy]
-compute = "process"
-entry = "server.cjs"
-health_check_path = "/api/health"
