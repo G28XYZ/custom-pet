@@ -1,0 +1,35 @@
+{
+  "name": "todo-app",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:shared && npm run build:server && npm run build:client",
+    "build:shared": "npm run typecheck -w @todo/shared",
+    "build:server": "npm run build -w @todo/server",
+    "build:client": "npm run build -w client",
+    "build:onreza": "node scripts/build-onreza.mjs",
+    "start:onreza": "node dist/server.cjs",
+    "onreza:login": "nrz login",
+    "onreza:link": "nrz link",
+    "onreza:build": "nrz build",
+    "onreza:whoami": "nrz whoami",
+    "onreza:env:validate": "nrz env validate",
+    "onreza:env:pull": "nrz env pull .env.local",
+    "onreza:env:push": "nrz env push .env.local --declared-only",
+    "deploy": "nrz deploy",
+    "deploy:preview": "nrz deploy",
+    "deploy:prod": "nrz deploy --prod",
+    "deploy:skip-build": "nrz deploy --skip-build",
+    "deploy:prod:skip-build": "nrz deploy --prod --skip-build",
+    "deployments": "nrz deployments",
+    "logs": "nrz logs",
+    "dev": "concurrently \"npm run dev -w @todo/server\" \"npm run dev -w client\""
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "esbuild": "^0.19.12"
+  }
+}
