@@ -11,6 +11,21 @@ const run = (command, args) => {
   execFileSync(command, args, { cwd: root, stdio: "inherit" });
 };
 
+const pruneInstallTreeForOnreza = () => {
+  if (process.env.ONREZA_BUILD !== "1") {
+    return;
+  }
+
+  for (const directory of [
+    "node_modules",
+    "apps/client/node_modules",
+    "apps/server/node_modules",
+    "packages/shared/node_modules",
+  ]) {
+    rmSync(resolve(root, directory), { recursive: true, force: true });
+  }
+};
+
 run("npm", ["run", "build"]);
 
 rmSync(target, { recursive: true, force: true });
@@ -42,5 +57,7 @@ writeFileSync(
   resolve(target, ".onreza", "manifest.json"),
   `${JSON.stringify(manifest, null, 2)}\n`
 );
+
+pruneInstallTreeForOnreza();
 
 console.log("Onreza build output created in dist/");
