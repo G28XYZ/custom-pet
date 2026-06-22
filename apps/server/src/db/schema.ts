@@ -1,9 +1,9 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import { bigint, boolean, pgTable, text } from 'drizzle-orm/pg-core';
 
-export const todos = sqliteTable('todos', {
+export const todos = pgTable('todos', {
   id: text('id').primaryKey(),
   text: text('text').notNull(),
-  completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
-  createdAt: integer('created_at', { mode: 'number' }).notNull(),
-  updatedAt: integer('updated_at', { mode: 'number' }).notNull(),
+  completed: boolean('completed').notNull().default(false),
+  createdAt: bigint('created_at', { mode: 'number' }).notNull(),
+  updatedAt: bigint('updated_at', { mode: 'number' }).notNull(),
 });

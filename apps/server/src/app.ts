@@ -5,9 +5,14 @@ import { createDb } from './db';
 import { migrate } from './db/migrate';
 import { TodoRepository } from './db/repository';
 import { createRouter } from './api/routes';
+import type { Db } from './db';
 
 export async function createApp(dbPath: string, staticDir?: string) {
   const db = createDb(dbPath);
+  return createAppWithDb(db, staticDir);
+}
+
+export async function createAppWithDb(db: Db, staticDir?: string) {
   await migrate(db);
 
   const repo = new TodoRepository(db);

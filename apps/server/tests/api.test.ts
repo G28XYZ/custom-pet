@@ -1,27 +1,16 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import request from 'supertest';
-import { createApp } from '../src/app';
+import { createAppWithDb } from '../src/app';
+import { createTestDb } from '../src/db';
 import type { Express } from 'express';
-import Database from 'better-sqlite3';
-import { rmSync } from 'fs';
-
-const TEST_DB = './data/test-todos.db';
 
 let app: Express;
 
 beforeAll(async () => {
-  // Clean test DB
-  try { rmSync(TEST_DB); } catch {}
-  try { rmSync(TEST_DB + '-wal'); } catch {}
-  try { rmSync(TEST_DB + '-shm'); } catch {}
-  app = await createApp(TEST_DB);
+  app = await createAppWithDb(createTestDb());
 });
 
-afterAll(() => {
-  try { rmSync(TEST_DB); } catch {}
-  try { rmSync(TEST_DB + '-wal'); } catch {}
-  try { rmSync(TEST_DB + '-shm'); } catch {}
-});
+afterAll(() => {});
 
 import supertest from 'supertest';
 
@@ -74,14 +63,10 @@ describe('Server API', () => {
     });
 
     it('should return empty array when no todos', async () => {
-      const freshApp = await createApp('./data/test-empty.db');
-      try {
-        const res = await request(freshApp).get('/api/todos');
-        expect(res.status).toBe(200);
-        expect(res.body).toEqual([]);
-      } finally {
-        try { rmSync('./data/test-empty.db'); } catch {}
-      }
+      const freshApp = await createAppWithDb(createTestDb());
+      const res = await request(freshApp).get('/api/todos');
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual([]);
     });
   });
 

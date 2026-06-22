@@ -38,7 +38,6 @@ await build({
   target: "node20",
   format: "cjs",
   outfile: resolve(target, "server.cjs"),
-  external: ["better-sqlite3", "bun:sqlite"],
 });
 
 const manifest = {
